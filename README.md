@@ -4,9 +4,7 @@
 
 CodeCollab is a powerful, full-stack platform designed for developers to code, brainstorm, and communicate together in real-time. Whether it's remote pair programming, technical interviews, or classroom learning, CodeCollab provides the perfect shared workspace.
 
-![CodeCollab Preview](file:///C:/Users/jainp/.gemini/antigravity/brain/d37f1101-5d2c-403b-aa0b-271c11f3f749/final_comprehensive_test_1771860691320.webp)
-
-## 🌈 Key Features
+##  Key Features
 
 - **⚡ Interactive Terminal**: Full-featured VS Code-like terminal using `xterm.js` with real-time `stdin`/`stdout` streaming and a robust remote fallback runner.
 - **📝 Collaborative Editor**: Multi-file tab support powered by **Monaco Editor** and **Yjs** for conflict-free real-time synchronization.
@@ -45,4 +43,4 @@ CodeCollab is a powerful, full-stack platform designed for developers to code, b
 4. **Run Dev**: `npm run dev`
 
 ---
-Built with ❤️ by Prakhar Jain
+Built by Prakhar Jain
