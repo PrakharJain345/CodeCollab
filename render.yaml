@@ -1,0 +1,32 @@
+services:
+  # Backend Service (Node.js)
+  - type: web
+    name: codecollab-backend
+    env: node
+    plan: free
+    buildCommand: npm install && cd backend && npm install
+    startCommand: node backend/index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.0.0
+      - key: MONGO_URI
+        sync: false # User will provide this in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: VITE_GROQ_API_KEY
+        sync: false # User will provide this
+
+  # Frontend Static Site
+  - type: static
+    name: codecollab-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishDir: dist
+    envVars:
+      - key: VITE_WS_URL
+        fromService:
+          name: codecollab-backend
+          type: web
+          property: host
+        # Note: Render static sites need the full wss:// URL. 
+        # The user might need to adjust this in the dashboard to include "wss://"

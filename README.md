@@ -1,16 +1,31 @@
-# React + Vite
+# 🚀 CodeCollab
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Professional Full-Stack Collaborative Code Editor**
 
-Currently, two official plugins are available:
+CodeCollab is a powerful, real-time developer environment featuring shared editing, interactive terminals, whiteboards, video calls, and AI assistance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌈 Key Features
+- **Interactive Terminal**: Real-time streaming and `stdin` support using `xterm.js`.
+- **Collaborative Editor**: Multi-file tab support with Monaco & Yjs.
+- **AI Assistant**: Smart developer helper powered by Groq API.
+- **Shared Whiteboard**: Draw and brainstorm together live.
+- **Video & Chat**: Seamless communication while you code.
 
-## React Compiler
+## 🌐 Deployment Guide
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Backend (Logic & WebSockets)
+**Recommended Platform**: [Render](https://render.com) or [Railway](https://railway.app)
+- **Root Directory**: `backend`
+- **Build Command**: `npm install`
+- **Start Command**: `node index.js`
+- **Env Vars**: `MONGO_URI`, `JWT_SECRET`, `VITE_GROQ_API_KEY`.
 
-## Expanding the ESLint configuration
+### 2. Frontend (UI & React)
+**Recommended Platform**: [Vercel](https://vercel.com)
+- **Framework Preset**: `Vite`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Env Vars**: `VITE_WS_URL` (Set to your backend's `wss://` address).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+Created with ❤️ by Antigravity

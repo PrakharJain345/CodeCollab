@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "install-all": "npm install && cd backend && npm install",
+    "start": "node backend/index.js"
   },
   "dependencies": {
     "@daily-co/daily-js": "^0.87.0",
