@@ -28,41 +28,42 @@ export default function HistoryPanel({ snapshots, currentIdx, onRestore, onClose
 
   return (
     <div style={{
-      width: '300px', flexShrink: 0, display: 'flex', flexDirection: 'column',
-      background: '#0c0c1e', borderLeft: '1px solid rgba(255,255,255,0.06)',
+      width: '320px', flexShrink: 0, display: 'flex', flexDirection: 'column',
+      background: 'var(--bg-surface)', borderLeft: '1px solid var(--border-dim)',
     }}>
 
       {/* ── Header ──────────────────────────────────────────────────── */}
       <div style={{
         flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '10px 16px',
-        background: 'rgba(34,197,94,0.07)', borderBottom: '1px solid rgba(34,197,94,0.18)',
+        padding: '12px 18px',
+        background: 'rgba(16,185,129,0.05)', borderBottom: '1px solid var(--border-dim)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
             width: '28px', height: '28px', borderRadius: '8px',
-            background: 'linear-gradient(135deg, #14532d, #22c55e)',
+            background: 'linear-gradient(135deg, #059669, #10b981)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px',
-            boxShadow: '0 0 12px rgba(34,197,94,0.4)',
+            boxShadow: '0 0 16px rgba(16,185,129,0.3)',
           }}>📜</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Code History</span>
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Timeline</span>
         </div>
-        <span style={{ fontSize: '12px', color: 'rgba(226,232,240,0.3)' }}>
-          {snapshots.length} snapshot{snapshots.length !== 1 ? 's' : ''}
+        <span style={{ fontSize: '11px', fontWeight: '800', padding: '2px 8px', borderRadius: '12px', background: 'rgba(16,185,129,0.1)', color: '#34d399' }}>
+          {snapshots.length}
         </span>
       </div>
 
       {/* ── Slider ──────────────────────────────────────────────────── */}
       {snapshots.length > 1 && (
         <div style={{
-          flexShrink: 0, padding: '12px 16px',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
-          display: 'flex', flexDirection: 'column', gap: '6px',
+          flexShrink: 0, padding: '14px 18px',
+          borderBottom: '1px solid var(--border-dim)',
+          display: 'flex', flexDirection: 'column', gap: '8px',
+          background: 'rgba(0,0,0,0.1)'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'rgba(226,232,240,0.35)' }}>
-            <span>{fmtTime(snapshots[0].timestamp)}</span>
-            <span style={{ color: '#22c55e', fontWeight: '700' }}>← Scrub →</span>
-            <span>{fmtTime(snapshots[snapshots.length - 1].timestamp)}</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontWeight: '700', color: '#475569', letterSpacing: '0.05em' }}>
+            <span>ORIGIN</span>
+            <span style={{ color: '#10b981' }}>HISTORY SCRUB</span>
+            <span>LATEST</span>
           </div>
           <input
             type="range"
@@ -72,7 +73,7 @@ export default function HistoryPanel({ snapshots, currentIdx, onRestore, onClose
             onChange={e => setPreview(Number(e.target.value))}
             onMouseUp={e => handleRestore(Number(e.target.value))}
             onTouchEnd={e => handleRestore(Number(e.target.value))}
-            style={{ width: '100%', accentColor: '#22c55e', cursor: 'pointer' }}
+            style={{ width: '100%', accentColor: '#10b981', cursor: 'pointer', height: '4px', borderRadius: '2px' }}
           />
         </div>
       )}
@@ -80,66 +81,68 @@ export default function HistoryPanel({ snapshots, currentIdx, onRestore, onClose
       {/* ── Preview pane ────────────────────────────────────────────── */}
       {snap && (
         <div style={{
-          flexShrink: 0, padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.05)',
-          background: 'rgba(34,197,94,0.04)',
+          flexShrink: 0, padding: '12px 16px', borderBottom: '1px solid var(--border-dim)',
+          background: 'rgba(16,185,129,0.02)',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{
-                width: '8px', height: '8px', borderRadius: '50%',
-                background: snap.author === 'Me' ? '#22c55e' : '#06b6d4',
+                width: '6px', height: '6px', borderRadius: '50%',
+                background: snap.author === 'Me' ? '#10b981' : '#06b6d4',
+                boxShadow: `0 0 8px ${snap.author === 'Me' ? '#10b981' : '#06b6d4'}80`
               }} />
-              <span style={{ fontSize: '12px', fontWeight: '700', color: '#e2e8f0' }}>{snap.author}</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: '#f1f5f9' }}>{snap.author.toUpperCase()}</span>
             </div>
-            <span style={{ fontSize: '11px', color: 'rgba(226,232,240,0.35)', fontFamily: 'JetBrains Mono' }}>
+            <span style={{ fontSize: '11px', color: '#475569', fontWeight: '600' }}>
               {fmtTime(snap.timestamp)}
             </span>
           </div>
           <div style={{
-            padding: '8px 10px', borderRadius: '8px',
-            background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.06)',
-            maxHeight: '100px', overflow: 'hidden', position: 'relative',
+            padding: '10px', borderRadius: '12px',
+            background: 'var(--bg-panel)', border: '1px solid var(--border-standard)',
+            maxHeight: '120px', overflow: 'hidden', position: 'relative',
           }}>
             <pre style={{
-              margin: 0, fontFamily: 'JetBrains Mono, monospace', fontSize: '10px',
-              color: 'rgba(226,232,240,0.55)', lineHeight: 1.4, whiteSpace: 'pre-wrap', wordBreak: 'break-all',
+              margin: 0, fontFamily: 'var(--font-mono)', fontSize: '10px',
+              color: '#94a3b8', lineHeight: 1.5, whiteSpace: 'pre-wrap', wordBreak: 'break-all',
             }}>
               {snap.content.slice(0, 300)}{snap.content.length > 300 ? '...' : ''}
             </pre>
-            {/* Fade out */}
             <div style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0, height: '30px',
-              background: 'linear-gradient(transparent, #08080f)',
+              position: 'absolute', inset: 'auto 0 0 0', height: '40px',
+              background: 'linear-gradient(transparent, var(--bg-panel))',
             }} />
           </div>
           {preview !== null && preview !== currentIdx && (
             <button
               onClick={() => handleRestore(preview)}
               disabled={restoring}
+              className="btn-premium btn-primary"
               style={{
-                marginTop: '8px', width: '100%', padding: '7px', borderRadius: '8px',
-                border: 'none', cursor: 'pointer',
-                background: restoring ? 'rgba(34,197,94,0.3)' : 'linear-gradient(135deg, #14532d, #16a34a)',
-                color: '#fff', fontWeight: '700', fontSize: '13px',
-                boxShadow: '0 0 16px rgba(34,197,94,0.3)', transition: 'all 0.2s',
+                marginTop: '12px', width: '100%', padding: '8px',
+                background: restoring ? 'rgba(5,150,105,0.4)' : 'linear-gradient(135deg, #059669, #10b981)',
+                color: '#fff', fontSize: '12px',
               }}
             >
-              {restoring ? '✓ Restored!' : '⏪ Restore This Version'}
+              {restoring ? '✓ SYNCED' : 'RESTORE VERSION'}
             </button>
           )}
         </div>
       )}
 
       {/* ── Timeline list ───────────────────────────────────────────── */}
-      <div ref={listRef} style={{ flex: 1, overflowY: 'auto', padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <div ref={listRef} style={{ flex: 1, overflowY: 'auto', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
         {snapshots.length === 0 ? (
           <div style={{
             flex: 1, display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '30px 16px',
+            alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '40px 20px',
           }}>
-            <div style={{ fontSize: '32px', marginBottom: '8px' }}>⏳</div>
-            <p style={{ color: 'rgba(226,232,240,0.4)', fontSize: '13px' }}>
-              Start typing — snapshots save automatically every few seconds
+            <div style={{ fontSize: '32px', marginBottom: '12px', opacity: 0.5 }}>⌛</div>
+            <p style={{ color: '#94a3b8', fontSize: '14px', fontWeight: '600' }}>
+              No history yet
+            </p>
+            <p style={{ color: '#475569', fontSize: '12px', marginTop: '4px' }}>
+              We'll auto-save versions as you collaborate.
             </p>
           </div>
         ) : (
@@ -152,32 +155,31 @@ export default function HistoryPanel({ snapshots, currentIdx, onRestore, onClose
                 onMouseEnter={() => setPreview(i)}
                 onMouseLeave={() => setPreview(null)}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '8px 10px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-                  background: isActive ? 'rgba(34,197,94,0.12)' : 'rgba(255,255,255,0.03)',
-                  borderLeft: `3px solid ${isActive ? '#22c55e' : 'transparent'}`,
-                  transition: 'all 0.15s', textAlign: 'left',
+                  display: 'flex', alignItems: 'center', gap: '12px',
+                  padding: '10px 14px', borderRadius: '12px', border: '1px solid transparent', cursor: 'pointer',
+                  background: isActive ? 'rgba(16,185,129,0.06)' : 'rgba(255,255,255,0.02)',
+                  borderColor: isActive ? 'rgba(16,185,129,0.2)' : 'transparent',
+                  transition: 'all 0.2s', textAlign: 'left',
                 }}
               >
-                {/* Dot */}
                 <div style={{
-                  width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0,
-                  background: isActive ? '#22c55e' : 'rgba(34,197,94,0.3)',
-                  boxShadow: isActive ? '0 0 6px #22c55e' : 'none',
+                  width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+                  background: isActive ? '#10b981' : '#334155',
+                  boxShadow: isActive ? '0 0 8px #10b981' : 'none',
                 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
                     <span style={{
-                      fontSize: '12px', fontWeight: '600',
-                      color: isActive ? '#22c55e' : '#e2e8f0',
+                      fontSize: '12px', fontWeight: '700',
+                      color: isActive ? '#e2e8f0' : '#94a3b8',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>{snap.author}</span>
-                    <span style={{ fontSize: '10px', color: 'rgba(226,232,240,0.3)', fontFamily: 'JetBrains Mono', flexShrink: 0 }}>
+                    <span style={{ fontSize: '10px', color: '#475569', fontWeight: '600', flexShrink: 0 }}>
                       {fmtTime(snap.timestamp)}
                     </span>
                   </div>
                   <span style={{
-                    fontSize: '11px', color: 'rgba(226,232,240,0.3)',
+                    fontSize: '10px', color: '#475569', fontWeight: '500',
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block',
                   }}>
                     {snap.content.split('\n').length} lines · {snap.content.length} chars
