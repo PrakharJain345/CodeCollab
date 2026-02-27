@@ -151,102 +151,100 @@ export default function Whiteboard({ roomName, username }) {
       {/* ── Toolbar ─────────────────────────────────────────────────────── */}
       <div style={{
         flexShrink: 0, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px',
-        padding: '8px 16px',
-        background: 'rgba(124,58,237,0.08)', borderBottom: '1px solid rgba(124,58,237,0.2)',
+        padding: '12px 18px',
+        background: 'rgba(124,58,237,0.05)', borderBottom: '1px solid var(--border-dim)',
       }}>
         {/* Title */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '6px' }}>
           <div style={{
             width: '28px', height: '28px', borderRadius: '8px',
-            background: 'linear-gradient(135deg, #5b21b6, #a855f7)',
+            background: 'linear-gradient(135deg, var(--violet-600), var(--violet-500))',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px',
-            boxShadow: '0 0 12px rgba(168,85,247,0.4)',
+            boxShadow: '0 0 16px rgba(124,58,237,0.3)',
           }}>🎨</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Whiteboard</span>
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Canvas</span>
         </div>
 
         {/* Divider */}
-        <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+        <div style={{ width: '1px', height: '20px', background: 'var(--border-standard)', flexShrink: 0 }} />
 
         {/* Colors */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {COLORS.map(c => (
             <button
               key={c}
               onClick={() => { setColor(c); setEraser(false) }}
               style={{
-                width: '20px', height: '20px', borderRadius: '50%',
+                width: '18px', height: '18px', borderRadius: '50%',
                 background: c, border: 'none', cursor: 'pointer',
                 outline: (!eraser && color === c) ? `2px solid ${c}` : '2px solid transparent',
                 outlineOffset: '2px',
-                boxShadow: (!eraser && color === c) ? `0 0 8px ${c}80` : 'none',
-                transition: 'all 0.15s',
+                opacity: (!eraser && color === c) ? 1 : 0.6,
+                transform: (!eraser && color === c) ? 'scale(1.15)' : 'scale(1)',
+                transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
               }}
             />
           ))}
         </div>
 
         {/* Divider */}
-        <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+        <div style={{ width: '1px', height: '20px', background: 'var(--border-standard)', flexShrink: 0 }} />
 
         {/* Brush sizes */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {BRUSH_SIZES.map(s => (
             <button
               key={s}
               onClick={() => setBrush(s)}
+              className="btn-premium btn-ghost"
               style={{
-                width: `${Math.max(s * 1.5, 18)}px`, height: `${Math.max(s * 1.5, 18)}px`,
-                borderRadius: '50%', border: 'none', cursor: 'pointer',
-                background: brushSize === s ? 'rgba(168,85,247,0.6)' : 'rgba(255,255,255,0.15)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: 'all 0.15s',
+                width: '32px', height: '32px', padding: 0,
+                borderColor: brushSize === s ? 'var(--violet-500)' : 'var(--border-dim)',
+                background: brushSize === s ? 'rgba(124,58,237,0.1)' : 'rgba(255,255,255,0.03)',
               }}
             >
-              <div style={{ width: `${Math.min(s, 10)}px`, height: `${Math.min(s, 10)}px`, borderRadius: '50%', background: '#fff' }} />
+              <div style={{ width: `${Math.min(s/2 + 2, 8)}px`, height: `${Math.min(s/2 + 2, 8)}px`, borderRadius: '50%', background: brushSize === s ? 'var(--violet-400)' : '#94a3b8' }} />
             </button>
           ))}
         </div>
 
-        {/* Divider */}
-        <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
-
         {/* Tool buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
             onClick={() => setEraser(v => !v)}
-            title="Eraser"
+            className="btn-premium btn-ghost"
             style={{
-              padding: '6px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-              background: eraser ? 'rgba(248,113,113,0.2)' : 'rgba(255,255,255,0.06)',
-              color: eraser ? '#f87171' : 'rgba(226,232,240,0.6)',
-              fontWeight: '700', fontSize: '13px',
-              border: eraser ? '1px solid rgba(248,113,113,0.4)' : '1px solid rgba(255,255,255,0.08)',
-              transition: 'all 0.15s',
+              padding: '6px 12px',
+              color: eraser ? 'var(--rose-500)' : '#94a3b8',
+              borderColor: eraser ? 'rgba(244,63,94,0.3)' : 'var(--border-dim)',
+              background: eraser ? 'rgba(244,63,94,0.08)' : 'rgba(255,255,255,0.03)',
             }}
-          >⌫ Eraser</button>
+          >
+            <span>{eraser ? '🧼' : '✏️'}</span>
+            <span style={{ fontSize: '13px' }}>Eraser</span>
+          </button>
 
           <button
             onClick={undo}
-            title="Undo last stroke"
-            style={{
-              padding: '6px 12px', borderRadius: '8px', cursor: 'pointer',
-              background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)',
-              color: 'rgba(226,232,240,0.6)', fontWeight: '700', fontSize: '13px',
-              transition: 'all 0.15s',
-            }}
-          >↩ Undo</button>
+            className="btn-premium btn-ghost"
+            style={{ padding: '6px 14px' }}
+          >
+            <span>↩</span>
+            <span style={{ fontSize: '13px' }}>Undo</span>
+          </button>
 
           <button
             onClick={clearBoard}
-            title="Clear board for everyone"
+            className="btn-premium"
             style={{
-              padding: '6px 12px', borderRadius: '8px', cursor: 'pointer',
-              background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
-              color: '#f87171', fontWeight: '700', fontSize: '13px',
-              transition: 'all 0.15s',
+              padding: '6px 14px',
+              background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)',
+              color: '#f87171'
             }}
-          >🗑 Clear All</button>
+          >
+             <span>🗑</span>
+             <span style={{ fontSize: '13px' }}>Reset</span>
+          </button>
         </div>
 
         {/* Connection pill */}
