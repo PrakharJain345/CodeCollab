@@ -6,34 +6,35 @@ CodeCollab is a powerful, full-stack platform designed for developers to code, b
 
 ##  Key Features
 
-- **⚡ Interactive Terminal**: Full-featured VS Code-like terminal using `xterm.js` with real-time `stdin`/`stdout` streaming and a robust remote fallback runner.
-- **📝 Collaborative Editor**: Multi-file tab support powered by **Monaco Editor** and **Yjs** for conflict-free real-time synchronization.
-- **🤖 AI Assistant**: Context-aware developer helper integrated with the **Groq API** to help you write, debug, and explain code.
-- **🎨 Shared Whiteboard**: Real-time canvas for architectural diagrams and brainstorming sessions.
-- **🎥 Video & Chat**: Seamless group video calls (via Daily.co) and instant messaging baked right into the layout.
-- **🔒 Secure Rooms**: Password-protected private rooms with role-based permissions and persistent room metadata.
+- **🛡️ Deep Obsidian Aesthetic**: A premium, high-tech interface with glassmorphism effects and sophisticated animations.
+- **⚡ Interactive Terminal**: Full-featured VS Code-like terminal using `xterm.js` with real-time `stdin`/`stdout` streaming.
+- **📝 Collaborative Editor**: Multi-file tab support powered by **Monaco Editor** and **Yjs** for conflict-free synchronization.
+- **🤖 AI Expert**: Context-aware developer assistant using **Groq API** (Llama 3.3 70B) to help you code faster.
+- **🎨 Shared Canvas**: Real-time collaborative whiteboard for brainstorming and architecture diagrams.
+- **🎥 Secure Video**: Face-to-face collaboration powered by **Jitsi (JaaS)** integrated directly into the workspace.
+- **🔒 Private Rooms**: Password-protected rooms with permanent persistence for code and history.
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React, Vite, TailwindCSS, Monaco Editor, Xterm.js, Yjs (WebRTC/WebSocket).
-- **Backend**: Node.js, Express, Socket.io/WS, Mongoose (MongoDB Atlas).
-- **Services**: Daily.co (Video), Groq API (AI), Wandbox (Remote Execution Fallback).
+- **Frontend**: React, Vite, Premium CSS Design System, Monaco Editor, Xterm.js, Yjs.
+- **Backend**: Node.js, Express, WebSockets (`ws`), Mongoose, MongoDB Atlas.
+- **Services**: Jitsi as a Service (Video), Groq API (AI Assistant), Wandbox (Remote Runner Fallback).
 
 ## 🌐 Deployment Guide
 
-### Backend (Logic & WebSockets)
+### Backend (Node.js & WebSockets)
 **Recommended**: [Render](https://render.com)
-- **Root Directory**: `backend`
-- **Build Command**: `npm install`
-- **Start Command**: `node index.js`
-- **Env Vars**: `MONGO_URI`, `JWT_SECRET`, `VITE_GROQ_API_KEY`.
+- **Runtime**: Node
+- **Build Command**: `npm run install-all` (from root)
+- **Start Command**: `npm start` (from root)
+- **Env Vars**: `MONGO_URI`, `JWT_SECRET`, `NODE_VERSION=18.0.0`.
 
-### Frontend (UI & React)
+### Frontend (React & Vite)
 **Recommended**: [Vercel](https://vercel.com)
 - **Framework Preset**: `Vite`
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist`
-- **Env Vars**: `VITE_WS_URL` (Set to your backend's `wss://` address), `VITE_GROQ_API_KEY`.
+- **Env Vars**: `VITE_WS_URL` (e.g. `wss://your-backend.onrender.com`), `VITE_GROQ_API_KEY`, `VITE_JAAS_APP_ID`.
 
 ## 💻 Local Setup
 
