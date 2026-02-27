@@ -1,185 +1,194 @@
 import { useState } from 'react'
 
+const LogoIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="logo-grad-main" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#8b5cf6" />
+        <stop offset="100%" stopColor="#06b6d4" />
+      </linearGradient>
+      <filter id="logo-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="1.5" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    {/* Background Hex */}
+    <path 
+      d="M16 2L28.1244 9V23L16 30L3.87564 23V9L16 2Z" 
+      fill="url(#logo-grad-main)" 
+      fillOpacity="0.15" 
+      stroke="url(#logo-grad-main)" 
+      strokeWidth="1.5"
+    />
+    {/* Interlocking Elements */}
+    <path 
+      d="M16 8L22.9282 12V20L16 24L9.0718 20V12L16 8Z" 
+      stroke="white" 
+      strokeWidth="2.5" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      filter="url(#logo-glow)"
+    />
+    <path 
+      d="M16 12L19.4641 14V18L16 20L12.5359 18V14L16 12Z" 
+      fill="white" 
+      fillOpacity="0.8"
+    />
+  </svg>
+)
+
 export default function Header({ roomName, username, userCount, isAdmin, users = [], showChat, onToggleChat, showAI, onToggleAI, showWhiteboard, onToggleWhiteboard, showHistory, onToggleHistory, onTogglePermission, onLeave }) {
-
-
   const [showUserList, setShowUserList] = useState(false)
-
   const otherUsers = users.filter(u => u.name !== username)
 
   return (
     <>
       {/* ── Main Header Bar ─────────────────────────────── */}
       <header style={{
-        height: '64px',
+        height: '68px',
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 24px',
-        background: 'linear-gradient(90deg, #0a001f 0%, #080c1f 50%, #0a0013 100%)',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-surface)',
+        borderBottom: '1px solid var(--border-standard)',
         position: 'relative',
         zIndex: 50,
+        boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
       }}>
-        {/* Rainbow top line */}
+        {/* TOP ACCENT LINE */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-          background: 'linear-gradient(90deg, #7c3aed, #06b6d4, #ec4899)',
+          background: 'linear-gradient(90deg, var(--violet-600), var(--cyan-500), var(--rose-500))',
+          opacity: 0.8
         }} />
 
         {/* LEFT — Logo + Room pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{
-              width: '34px', height: '34px', borderRadius: '10px', flexShrink: 0,
-              background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '18px', boxShadow: '0 0 16px rgba(168,85,247,0.5)',
-            }}>⚡</div>
-            <span style={{
-              fontSize: '18px', fontWeight: '800', letterSpacing: '-0.4px',
-              background: 'linear-gradient(90deg, #a855f7, #06b6d4)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+            <LogoIcon />
+            <span className="text-gradient" style={{
+              fontSize: '20px', fontWeight: '800', letterSpacing: '-0.5px',
             }}>CodeCollab</span>
           </div>
 
           {/* Room name pill */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: '8px',
-            padding: '6px 14px', borderRadius: '8px',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
+            padding: '6px 14px', borderRadius: '10px',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid var(--border-dim)',
           }}>
-            <span style={{ fontSize: '11px', color: 'rgba(226,232,240,0.4)', fontWeight: '600', letterSpacing: '0.8px' }}>ROOM</span>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: '#e2e8f0', fontFamily: 'JetBrains Mono, monospace' }}>
+            <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', fontWeight: '700', letterSpacing: '1px' }}>ROOM</span>
+            <span style={{ fontSize: '13px', fontWeight: '700', color: '#fff', fontFamily: 'JetBrains Mono, monospace' }}>
               {roomName}
             </span>
           </div>
         </div>
 
-        {/* RIGHT — Users button + username + leave */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* RIGHT — Tools & Profile */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
 
-          {/* History toggle button */}
+          {/* History */}
           {onToggleHistory && (
             <button
               onClick={onToggleHistory}
-              title="Toggle Code History"
+              title="Code Timeline"
+              className="btn-premium btn-ghost"
               style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                padding: '8px 14px', borderRadius: '8px', cursor: 'pointer',
-                background: showHistory ? 'rgba(34,197,94,0.15)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${showHistory ? 'rgba(34,197,94,0.5)' : 'rgba(255,255,255,0.1)'}`,
-                color: showHistory ? '#22c55e' : 'rgba(226,232,240,0.4)',
-                fontSize: '14px', fontWeight: '700',
-                boxShadow: showHistory ? '0 0 16px rgba(34,197,94,0.25)' : 'none',
-                transition: 'all 0.2s',
+                borderColor: showHistory ? 'var(--accent-success)' : 'var(--border-dim)',
+                color: showHistory ? '#34d399' : '#94a3b8',
+                background: showHistory ? 'rgba(16,185,129,0.08)' : 'rgba(255,255,255,0.03)',
               }}
             >
-              <span>📜</span>
-              <span style={{ fontSize: '12px' }}>History</span>
+              <span style={{ fontSize: '16px' }}>🕒</span>
+              <span style={{ fontSize: '13px' }}>History</span>
             </button>
           )}
 
-          {/* Whiteboard toggle button */}
+          {/* Draw */}
           {onToggleWhiteboard && (
             <button
               onClick={onToggleWhiteboard}
-              title="Toggle Whiteboard"
+              title="Collaborative Canvas"
+              className="btn-premium btn-ghost"
               style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                padding: '8px 14px', borderRadius: '8px', cursor: 'pointer',
-                background: showWhiteboard ? 'rgba(6,182,212,0.18)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${showWhiteboard ? 'rgba(6,182,212,0.5)' : 'rgba(255,255,255,0.1)'}`,
-                color: showWhiteboard ? '#06b6d4' : 'rgba(226,232,240,0.4)',
-                fontSize: '14px', fontWeight: '700',
-                boxShadow: showWhiteboard ? '0 0 16px rgba(6,182,212,0.25)' : 'none',
-                transition: 'all 0.2s',
+                borderColor: showWhiteboard ? 'var(--accent-secondary)' : 'var(--border-dim)',
+                color: showWhiteboard ? 'var(--cyan-400)' : '#94a3b8',
+                background: showWhiteboard ? 'rgba(6,182,212,0.08)' : 'rgba(255,255,255,0.03)',
               }}
             >
-              <span>🎨</span>
-              <span style={{ fontSize: '12px' }}>Draw</span>
+              <span style={{ fontSize: '16px' }}>🎨</span>
+              <span style={{ fontSize: '13px' }}>Canvas</span>
             </button>
           )}
 
-          {/* AI toggle button */}
+          {/* AI */}
           {onToggleAI && (
             <button
               onClick={onToggleAI}
-              title="Toggle AI Assistant"
+              title="AI Assistant"
+              className="btn-premium btn-ghost"
               style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                padding: '8px 14px', borderRadius: '8px', cursor: 'pointer',
-                background: showAI ? 'rgba(168,85,247,0.2)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${showAI ? 'rgba(168,85,247,0.5)' : 'rgba(255,255,255,0.1)'}`,
-                color: showAI ? '#a855f7' : 'rgba(226,232,240,0.4)',
-                fontSize: '14px', fontWeight: '700',
-                boxShadow: showAI ? '0 0 16px rgba(168,85,247,0.3)' : 'none',
-                transition: 'all 0.2s',
+                borderColor: showAI ? 'var(--accent-primary)' : 'var(--border-dim)',
+                color: showAI ? '#a78bfa' : '#94a3b8',
+                background: showAI ? 'rgba(124,58,237,0.1)' : 'rgba(255,255,255,0.03)',
               }}
             >
-              <span>🤖</span>
-              <span style={{ fontSize: '12px' }}>AI</span>
+              <span style={{ fontSize: '16px' }}>🤖</span>
+              <span style={{ fontSize: '13px' }}>AI</span>
             </button>
           )}
 
-
-          {/* Chat toggle button */}
+          {/* Chat */}
           {onToggleChat && (
             <button
               onClick={onToggleChat}
-              title="Toggle Chat (Ctrl+Shift+C)"
+              title="Team Chat"
+              className="btn-premium btn-ghost"
               style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                padding: '8px 14px', borderRadius: '8px', cursor: 'pointer',
-                background: showChat ? 'rgba(236,72,153,0.15)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${showChat ? 'rgba(236,72,153,0.4)' : 'rgba(255,255,255,0.1)'}`,
-                color: showChat ? '#ec4899' : 'rgba(226,232,240,0.4)',
-                fontSize: '14px', fontWeight: '700',
-                boxShadow: showChat ? '0 0 16px rgba(236,72,153,0.2)' : 'none',
-                transition: 'all 0.2s',
+                borderColor: showChat ? 'var(--rose-500)' : 'var(--border-dim)',
+                color: showChat ? '#fb7185' : '#94a3b8',
+                background: showChat ? 'rgba(244,63,94,0.08)' : 'rgba(255,255,255,0.03)',
               }}
             >
-              <span>💬</span>
-              <span style={{ fontSize: '12px' }}>Chat</span>
+              <span style={{ fontSize: '16px' }}>💬</span>
+              <span style={{ fontSize: '13px' }}>Chat</span>
             </button>
           )}
+
+          <div style={{ width: '1px', height: '28px', background: 'var(--border-dim)', margin: '0 4px' }} />
 
           {/* Users button */}
           <button
             onClick={() => setShowUserList(v => !v)}
+            className="btn-premium btn-ghost"
             style={{
-              display: 'flex', alignItems: 'center', gap: '8px',
-              padding: '8px 16px', borderRadius: '8px', cursor: 'pointer',
-              background: showUserList ? 'rgba(6,182,212,0.2)' : 'rgba(6,182,212,0.1)',
-              border: `1px solid ${showUserList ? 'rgba(6,182,212,0.5)' : 'rgba(6,182,212,0.25)'}`,
-              color: '#06b6d4', fontSize: '14px', fontWeight: '700',
-              boxShadow: showUserList ? '0 0 20px rgba(6,182,212,0.3)' : 'none',
-              transition: 'all 0.2s',
+              background: 'rgba(99,102,241,0.08)',
+              borderColor: 'rgba(99,102,241,0.2)',
+              color: '#818cf8'
             }}
           >
             <span>👥</span>
-            <span>{userCount} online</span>
+            <span>{userCount}</span>
           </button>
 
-          {/* Username + admin badge */}
+          {/* Profile Badge */}
           <div style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
-            padding: '8px 14px', borderRadius: '8px',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            display: 'flex', alignItems: 'center', gap: '10px',
+            padding: '6px 12px', borderRadius: '12px',
+            background: 'var(--bg-panel)',
+            border: '1px solid var(--border-dim)',
+            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05)',
           }}>
-            {/* Pulse dot */}
-            <div style={{ position: 'relative', width: '8px', height: '8px', flexShrink: 0 }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e' }} />
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: '600', color: '#e2e8f0' }}>{username}</span>
+            <div className="online-dot" />
+            <span style={{ fontSize: '14px', fontWeight: '600', color: '#f1f5f9' }}>{username}</span>
             {isAdmin && (
               <span style={{
-                fontSize: '11px', fontWeight: '800', padding: '2px 8px', borderRadius: '6px',
-                background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
+                fontSize: '10px', fontWeight: '800', padding: '2px 8px', borderRadius: '6px',
+                background: 'linear-gradient(135deg, var(--violet-600), var(--indigo-600))',
                 color: 'white', letterSpacing: '0.5px',
               }}>ADMIN</span>
             )}
@@ -188,15 +197,15 @@ export default function Header({ roomName, username, userCount, isAdmin, users =
           {/* Leave button */}
           <button
             onClick={onLeave}
+            className="btn-premium"
             style={{
-              padding: '8px 18px', borderRadius: '8px', cursor: 'pointer',
-              background: 'rgba(244,63,94,0.15)',
-              border: '1px solid rgba(244,63,94,0.35)',
-              color: '#f43f5e', fontSize: '14px', fontWeight: '700',
-              transition: 'all 0.2s',
+              background: 'rgba(239,68,68,0.08)',
+              border: '1px solid rgba(239,68,68,0.2)',
+              color: '#f87171',
+              padding: '8px 16px',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,63,94,0.3)'; e.currentTarget.style.boxShadow = '0 0 18px rgba(244,63,94,0.35)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(244,63,94,0.15)'; e.currentTarget.style.boxShadow = 'none' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.15)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.08)' }}
           >
             Leave
           </button>
