@@ -158,53 +158,50 @@ Always refer to this code context when answering questions.`
 
   return (
     <div style={{
-      width: '300px', flexShrink: 0, display: 'flex', flexDirection: 'column',
-      background: '#0c0c1e', borderLeft: '1px solid rgba(255,255,255,0.06)',
+      width: '320px', flexShrink: 0, display: 'flex', flexDirection: 'column',
+      background: 'var(--bg-surface)', borderLeft: '1px solid var(--border-dim)',
     }}>
 
       {/* Header */}
       <div style={{
         flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '10px 16px',
-        background: 'rgba(168,85,247,0.08)', borderBottom: '1px solid rgba(168,85,247,0.18)',
+        padding: '12px 18px',
+        background: 'rgba(139,92,246,0.05)', borderBottom: '1px solid var(--border-dim)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
             width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
-            background: 'linear-gradient(135deg, #5b21b6, #a855f7)',
+            background: 'linear-gradient(135deg, var(--violet-600), #a78bfa)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px',
-            boxShadow: '0 0 12px rgba(168,85,247,0.4)',
+            boxShadow: '0 0 16px rgba(139,92,246,0.3)',
           }}>🤖</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>AI Assistant</span>
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>AI Expert</span>
         </div>
         {messages.length > 0 && (
-          <button onClick={() => setMessages([])} style={{
-            padding: '3px 9px', borderRadius: '6px', border: 'none', cursor: 'pointer',
-            background: 'rgba(255,255,255,0.06)', color: 'rgba(226,232,240,0.45)', fontSize: '11px',
-          }}>Clear</button>
+          <button onClick={() => setMessages([])} className="btn-premium btn-ghost" style={{ padding: '2px 8px', fontSize: '10px' }}>
+            Clear
+          </button>
         )}
       </div>
 
       {/* Quick actions */}
       <div style={{
-        flexShrink: 0, padding: '10px 12px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        display: 'flex', flexWrap: 'wrap', gap: '6px',
+        flexShrink: 0, padding: '12px',
+        borderBottom: '1px solid var(--border-dim)',
+        display: 'flex', flexWrap: 'wrap', gap: '8px',
+        background: 'rgba(0,0,0,0.1)'
       }}>
         {QUICK_ACTIONS.map(action => (
           <button
             key={action.label}
             onClick={() => handleQuickAction(action)}
             disabled={loading}
+            className="btn-premium btn-ghost"
             style={{
-              display: 'flex', alignItems: 'center', gap: '4px',
-              padding: '5px 10px', borderRadius: '8px', cursor: 'pointer',
-              background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.2)',
-              color: '#c4b5fd', fontSize: '12px', fontWeight: '600',
-              transition: 'all 0.15s', opacity: loading ? 0.5 : 1,
+              padding: '6px 12px', borderRadius: '10px',
+              fontSize: '12px', fontWeight: '700',
+              opacity: loading ? 0.5 : 1,
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(168,85,247,0.22)'; e.currentTarget.style.borderColor = 'rgba(168,85,247,0.5)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(168,85,247,0.1)'; e.currentTarget.style.borderColor = 'rgba(168,85,247,0.2)' }}
           >
             <span>{action.icon}</span>
             <span>{action.label}</span>
@@ -214,42 +211,42 @@ Always refer to this code context when answering questions.`
 
       {/* Messages */}
       <div style={{
-        flex: 1, overflowY: 'auto', padding: '12px',
-        display: 'flex', flexDirection: 'column', gap: '12px',
+        flex: 1, overflowY: 'auto', padding: '16px',
+        display: 'flex', flexDirection: 'column', gap: '16px',
       }}>
         {messages.length === 0 && !loading && (
           <div style={{
             flex: 1, display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '30px 16px',
+            alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '30px 20px',
           }}>
-            <div style={{ fontSize: '36px', marginBottom: '10px' }}>🤖</div>
-            <p style={{ color: 'rgba(226,232,240,0.4)', fontSize: '14px', fontWeight: '500' }}>
-              Ask me anything about your code
+            <div style={{ fontSize: '32px', marginBottom: '12px', opacity: 0.5 }}>⚡</div>
+            <p style={{ color: '#94a3b8', fontSize: '14px', fontWeight: '600' }}>
+              Intelligent Assistance
             </p>
-            <p style={{ color: 'rgba(226,232,240,0.25)', fontSize: '12px', marginTop: '4px', lineHeight: 1.5 }}>
-              Use quick actions above or type a custom question below
+            <p style={{ color: '#475569', fontSize: '12px', marginTop: '4px', lineHeight: 1.5 }}>
+              I can explain logic, fix bugs, or optimize your code instantly.
             </p>
           </div>
         )}
 
         {messages.map((msg, i) => (
-          <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             {/* Role label */}
             <span style={{
-              fontSize: '11px', fontWeight: '700',
-              color: msg.role === 'user' ? '#a855f7' : msg.role === 'error' ? '#f87171' : '#06b6d4',
+              fontSize: '10px', fontWeight: '800', letterSpacing: '0.05em',
+              color: msg.role === 'user' ? 'var(--violet-400)' : msg.role === 'error' ? 'var(--accent-danger)' : 'var(--accent-secondary)',
             }}>
-              {msg.role === 'user' ? '👤 You' : msg.role === 'error' ? '⚠️ Error' : '🤖 Gemini'}
+              {msg.role === 'user' ? 'YOU' : msg.role === 'error' ? 'ERROR' : 'CODECOLLAB AI'}
             </span>
             {/* Message bubble */}
             <div style={{
-              padding: '10px 12px', borderRadius: '10px',
+              padding: '12px 14px', borderRadius: '16px',
               fontSize: '13px', lineHeight: 1.6,
               ...(msg.role === 'user'
-                ? { background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.2)', color: '#e2e8f0' }
+                ? { background: 'var(--bg-panel)', border: '1px solid var(--border-dim)', color: '#f1f5f9' }
                 : msg.role === 'error'
-                  ? { background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', color: '#f87171' }
-                  : { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#e2e8f0' }
+                  ? { background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)', color: '#f87171' }
+                  : { background: 'rgba(124,58,237,0.03)', border: '1px solid rgba(124,58,237,0.1)', color: '#f1f5f9' }
               ),
             }}>
               {msg.role === 'ai'
@@ -262,23 +259,23 @@ Always refer to this code context when answering questions.`
 
         {/* Loading indicator */}
         {loading && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <span style={{ fontSize: '11px', fontWeight: '700', color: '#06b6d4' }}>🤖 Gemini</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <span style={{ fontSize: '10px', fontWeight: '800', color: 'var(--accent-secondary)' }}>CODECOLLAB AI</span>
             <div style={{
-              padding: '12px', borderRadius: '10px',
-              background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
-              display: 'flex', alignItems: 'center', gap: '10px',
+              padding: '14px', borderRadius: '16px',
+              background: 'rgba(6,182,212,0.03)', border: '1px solid rgba(6,182,212,0.1)',
+              display: 'flex', alignItems: 'center', gap: '12px',
             }}>
               <div style={{ display: 'flex', gap: '4px' }}>
                 {[0, 1, 2].map(i => (
                   <div key={i} style={{
-                    width: '7px', height: '7px', borderRadius: '50%',
-                    background: '#a855f7',
+                    width: '6px', height: '6px', borderRadius: '50%',
+                    background: 'var(--accent-secondary)',
                     animation: `pulse 1.2s ease-in-out ${i * 0.2}s infinite`,
                   }} />
                 ))}
               </div>
-              <span style={{ fontSize: '12px', color: 'rgba(226,232,240,0.45)' }}>Thinking...</span>
+              <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600' }}>Decoding...</span>
             </div>
           </div>
         )}
@@ -286,33 +283,31 @@ Always refer to this code context when answering questions.`
       </div>
 
       {/* Input */}
-      <div style={{ flexShrink: 0, padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <form onSubmit={(e) => { e.preventDefault(); send(input) }} style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ flexShrink: 0, padding: '12px', borderTop: '1px solid var(--border-dim)', background: 'rgba(0,0,0,0.1)' }}>
+        <form onSubmit={(e) => { e.preventDefault(); send(input) }} style={{ display: 'flex', gap: '10px' }}>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Ask about your code..."
+            placeholder="Ask a question..."
             disabled={loading}
             style={{
-              flex: 1, padding: '9px 13px', borderRadius: '10px',
-              background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(168,85,247,0.25)',
-              color: '#e2e8f0', fontSize: '13px', outline: 'none', fontFamily: 'Inter, sans-serif',
+              flex: 1, padding: '10px 14px', borderRadius: '12px',
+              background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-standard)',
+              color: '#f1f5f9', fontSize: '13px', outline: 'none',
               opacity: loading ? 0.6 : 1,
             }}
-            onFocus={e => { e.target.style.border = '1px solid rgba(168,85,247,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(168,85,247,0.1)' }}
-            onBlur={e => { e.target.style.border = '1px solid rgba(168,85,247,0.25)'; e.target.style.boxShadow = 'none' }}
+            onFocus={e => e.target.style.borderColor = 'var(--violet-500)'}
+            onBlur={e => e.target.style.borderColor = 'var(--border-standard)'}
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
+            className="btn-premium btn-primary"
             style={{
-              padding: '9px 14px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-              background: 'linear-gradient(135deg, #5b21b6, #a855f7)',
-              color: '#fff', fontWeight: '700', fontSize: '15px',
-              boxShadow: input.trim() && !loading ? '0 0 14px rgba(168,85,247,0.4)' : 'none',
-              opacity: input.trim() && !loading ? 1 : 0.35, transition: 'all 0.2s',
+              width: '42px', height: '40px', padding: 0,
+              opacity: input.trim() && !loading ? 1 : 0.35,
             }}
           >➤</button>
         </form>
