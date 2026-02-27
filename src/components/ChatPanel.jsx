@@ -61,12 +61,12 @@ export default function ChatPanel({ roomName, username }) {
 
   return (
     <div style={{
-      width: '280px',
+      width: '300px',
       flexShrink: 0,
       display: 'flex',
       flexDirection: 'column',
-      background: '#0c0c1e',
-      borderLeft: '1px solid rgba(255,255,255,0.06)',
+      background: 'var(--bg-surface)',
+      borderLeft: '1px solid var(--border-dim)',
     }}>
 
       {/* Header */}
@@ -75,40 +75,40 @@ export default function ChatPanel({ roomName, username }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '10px 16px',
-        background: 'rgba(236,72,153,0.08)',
-        borderBottom: '1px solid rgba(236,72,153,0.18)',
+        padding: '12px 18px',
+        background: 'rgba(244,63,94,0.05)',
+        borderBottom: '1px solid var(--border-dim)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
             width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
-            background: 'linear-gradient(135deg, #be185d, #ec4899)',
+            background: 'linear-gradient(135deg, #e11d48, #fb7185)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '14px', boxShadow: '0 0 12px rgba(236,72,153,0.4)',
+            fontSize: '14px', boxShadow: '0 0 16px rgba(244,63,94,0.3)',
           }}>💬</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Chat</span>
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Community</span>
         </div>
         <span style={{
-          fontSize: '12px', fontWeight: '700', padding: '3px 9px', borderRadius: '20px',
-          background: 'rgba(236,72,153,0.15)',
-          color: '#ec4899', border: '1px solid rgba(236,72,153,0.25)',
+          fontSize: '11px', fontWeight: '800', padding: '2px 8px', borderRadius: '12px',
+          background: 'rgba(244,63,94,0.12)',
+          color: '#fb7185', border: '1px solid rgba(244,63,94,0.2)',
         }}>{messages.length}</span>
       </div>
 
       {/* Messages area */}
       <div style={{
-        flex: 1, overflowY: 'auto', padding: '12px',
-        display: 'flex', flexDirection: 'column', gap: '10px',
+        flex: 1, overflowY: 'auto', padding: '16px',
+        display: 'flex', flexDirection: 'column', gap: '12px',
       }}>
         {messages.length === 0 ? (
           <div style={{
             flex: 1, display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
-            textAlign: 'center', padding: '40px 16px',
+            textAlign: 'center', padding: '40px 20px',
           }}>
-            <div style={{ fontSize: '36px', marginBottom: '10px' }}>💬</div>
-            <p style={{ color: 'rgba(226,232,240,0.4)', fontSize: '14px', fontWeight: '500' }}>No messages yet</p>
-            <p style={{ color: 'rgba(226,232,240,0.25)', fontSize: '12px', marginTop: '4px' }}>Be the first to say hi! 👋</p>
+            <div style={{ fontSize: '32px', marginBottom: '12px', opacity: 0.5 }}>⌨️</div>
+            <p style={{ color: '#94a3b8', fontSize: '14px', fontWeight: '600' }}>No messages yet</p>
+            <p style={{ color: '#475569', fontSize: '12px', marginTop: '4px' }}>Spark the conversation!</p>
           </div>
         ) : (
           messages.map((msg) => {
@@ -119,21 +119,21 @@ export default function ChatPanel({ roomName, username }) {
                 alignItems: isMe ? 'flex-end' : 'flex-start',
               }}>
                 {!isMe && (
-                  <span style={{ fontSize: '11px', fontWeight: '700', marginBottom: '4px', color: '#ec4899', paddingLeft: '2px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: '700', marginBottom: '4px', color: '#fb7185', opacity: 0.8 }}>
                     {msg.user}
                   </span>
                 )}
                 <div style={{
-                  maxWidth: '85%', padding: '8px 12px', borderRadius: '14px',
+                  maxWidth: '90%', padding: '10px 14px', borderRadius: '16px',
                   fontSize: '13px', lineHeight: 1.5, wordBreak: 'break-word',
                   ...(isMe
-                    ? { background: 'linear-gradient(135deg, #be185d, #ec4899)', color: 'white', borderBottomRightRadius: '4px', boxShadow: '0 4px 14px rgba(236,72,153,0.3)' }
-                    : { background: 'rgba(255,255,255,0.07)', color: '#e2e8f0', borderBottomLeftRadius: '4px', border: '1px solid rgba(255,255,255,0.08)' }
+                    ? { background: 'linear-gradient(135deg, var(--rose-500), #e11d48)', color: 'white', borderBottomRightRadius: '4px', boxShadow: '0 4px 15px rgba(244,63,94,0.2)' }
+                    : { background: 'var(--bg-panel)', color: '#f1f5f9', borderBottomLeftRadius: '4px', border: '1px solid var(--border-dim)' }
                   ),
                 }}>
                   {msg.text}
                 </div>
-                <span style={{ fontSize: '11px', marginTop: '3px', color: 'rgba(226,232,240,0.3)', padding: '0 2px' }}>
+                <span style={{ fontSize: '10px', marginTop: '4px', color: '#475569', opacity: 0.7 }}>
                   {formatTime(msg.timestamp)}
                 </span>
               </div>
@@ -146,21 +146,20 @@ export default function ChatPanel({ roomName, username }) {
       {/* Quick Emoji Row */}
       <div style={{
         flexShrink: 0,
-        display: 'flex', gap: '4px',
-        padding: '8px 12px',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        display: 'flex', gap: '6px',
+        padding: '0 12px 12px 12px',
       }}>
         {QUICK_EMOJIS.map(emoji => (
           <button
             key={emoji}
             onClick={() => sendMessage(emoji)}
+            className="btn-premium btn-ghost"
             style={{
-              flex: 1, padding: '6px 0', borderRadius: '8px', cursor: 'pointer',
-              fontSize: '14px', background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)', transition: 'background 0.15s',
+              flex: 1, padding: '4px 0', border: '1px solid var(--border-dim)',
+              fontSize: '14px'
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(236,72,153,0.15)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,63,94,0.1)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)' }}
           >
             {emoji}
           </button>
@@ -168,8 +167,8 @@ export default function ChatPanel({ roomName, username }) {
       </div>
 
       {/* Input */}
-      <div style={{ flexShrink: 0, padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ flexShrink: 0, padding: '12px', borderTop: '1px solid var(--border-dim)', background: 'rgba(0,0,0,0.1)' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px' }}>
           <input
             ref={inputRef}
             type="text"
@@ -179,25 +178,23 @@ export default function ChatPanel({ roomName, username }) {
             placeholder="Type a message..."
             maxLength={500}
             style={{
-              flex: 1, padding: '9px 13px', borderRadius: '10px',
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(236,72,153,0.25)',
-              color: '#e2e8f0', fontSize: '13px',
-              outline: 'none', fontFamily: 'Inter, sans-serif',
+              flex: 1, padding: '10px 14px', borderRadius: '12px',
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid var(--border-standard)',
+              color: '#f1f5f9', fontSize: '13px',
+              outline: 'none', fontFamily: 'inherit',
             }}
-            onFocus={e => { e.target.style.border = '1px solid rgba(236,72,153,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(236,72,153,0.1)' }}
-            onBlur={e => { e.target.style.border = '1px solid rgba(236,72,153,0.25)'; e.target.style.boxShadow = 'none' }}
+            onFocus={e => { e.target.style.borderColor = 'var(--rose-500)'; e.target.style.background = 'rgba(255,255,255,0.05)' }}
+            onBlur={e => { e.target.style.borderColor = 'var(--border-standard)'; e.target.style.background = 'rgba(255,255,255,0.03)' }}
           />
           <button
             type="submit"
             disabled={!inputMessage.trim()}
+            className="btn-premium btn-primary"
             style={{
-              padding: '9px 14px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-              background: 'linear-gradient(135deg, #be185d, #ec4899)',
-              color: '#fff', fontWeight: '700', fontSize: '15px',
-              boxShadow: inputMessage.trim() ? '0 0 14px rgba(236,72,153,0.4)' : 'none',
-              opacity: inputMessage.trim() ? 1 : 0.4,
-              transition: 'all 0.2s',
+              width: '42px', height: '40px', padding: 0,
+              background: 'linear-gradient(135deg, #e11d48, #fb7185)',
+              opacity: inputMessage.trim() ? 1 : 0.3,
             }}
           >➤</button>
         </form>
