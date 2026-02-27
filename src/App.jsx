@@ -207,19 +207,19 @@ export default function App() {
 
       {/* Keyboard shortcuts hint bar */}
       <div style={{
-        flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px',
-        padding: '4px 20px',
-        background: 'rgba(0,0,0,0.4)', borderTop: '1px solid rgba(255,255,255,0.04)',
-        fontSize: '11px', color: 'rgba(226,232,240,0.2)',
+        flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '32px',
+        padding: '6px 20px',
+        background: 'rgba(0,0,0,0.5)', borderTop: '1px solid var(--border-dim)',
+        fontSize: '10px', fontWeight: '700', color: '#475569', letterSpacing: '0.05em',
       }}>
-        {[['Ctrl+Shift+C', 'Toggle Chat'], ['Ctrl+Enter', 'Run Code'], ['Esc', 'Close panels']].map(([key, label]) => (
-          <span key={key} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+        {[['Ctrl+Shift+C', 'TOGGLE CHAT'], ['Ctrl+Enter', 'RUN CODE'], ['Esc', 'CLOSE PANELS']].map(([key, label]) => (
+          <span key={key} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <kbd style={{
-              padding: '1px 5px', borderRadius: '4px', fontSize: '10px',
-              background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)',
-              color: 'rgba(226,232,240,0.4)', fontFamily: 'JetBrains Mono, monospace',
+              padding: '2px 6px', borderRadius: '4px', fontSize: '9px',
+              background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-standard)',
+              color: '#94a3b8', fontFamily: 'var(--font-mono)', boxShadow: '0 2px 0 rgba(0,0,0,0.3)'
             }}>{key}</kbd>
-            <span>{label}</span>
+            <span style={{ opacity: 0.8 }}>{label}</span>
           </span>
         ))}
       </div>
